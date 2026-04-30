@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer utilities {
+  .logo-screen {
+    mix-blend-mode: screen;
+  }
+}
+
+@keyframes nomi-twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes nomi-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.nomi-star {
+  animation: nomi-twinkle 3s ease-in-out infinite;
+}
+
+.nomi-star-delay {
+  animation: nomi-twinkle 2.4s ease-in-out infinite;
+  animation-delay: 0.7s;
+}
+
+.nomi-float-slow {
+  animation: nomi-float 5s ease-in-out infinite;
+}
