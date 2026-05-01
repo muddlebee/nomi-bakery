@@ -49,7 +49,7 @@ const NAV_LINKS = ["HOME", "ABOUT", "MENU", "GALLERY", "CONTACT"] as const;
 function PrimaryNav({
   className,
   linkGapClass = "gap-5 sm:gap-6 lg:gap-8",
-  textClass = "text-[11px] font-medium tracking-[0.18em] sm:text-[11.5px] lg:text-xs",
+  textClass = "text-[11px] font-medium tracking-[0.18em] sm:text-[11.5px] lg:text-xs font-sans",
 }: {
   className?: string;
   linkGapClass?: string;
@@ -80,7 +80,7 @@ function VisitUsButton({ className }: { className?: string }) {
   return (
     <button
       type="button"
-      className={`inline-flex shrink-0 items-center gap-2 rounded-full bg-[#EACF9E] px-4 py-2 text-[10px] font-semibold tracking-[0.12em] text-[#5a4530] shadow-[0_4px_20px_rgba(0,0,0,0.35)] transition hover:bg-[#F6EBC9] sm:px-5 sm:py-2.5 sm:text-[11px] sm:tracking-[0.13em] md:px-6 md:py-3 md:text-xs ${className ?? ""}`}
+      className={`inline-flex shrink-0 items-center gap-2 rounded-full bg-[#EACF9E] px-4 py-2 text-[10px] font-semibold tracking-[0.12em] text-[#5a4530] shadow-[0_4px_20px_rgba(0,0,0,0.35)] transition hover:bg-[#F6EBC9] sm:px-5 sm:py-2.5 sm:text-[11px] sm:tracking-[0.13em] md:px-6 md:py-3 md:text-xs font-sans ${className ?? ""}`}
     >
       <PawIcon className="h-3 w-3 shrink-0 sm:h-3.5 sm:w-3.5" />
       VISIT US
@@ -88,13 +88,28 @@ function VisitUsButton({ className }: { className?: string }) {
   );
 }
 
-function LogoMark({ className }: { className?: string }) {
+function LogoWordmark({ variant = "compact" }: { variant?: "compact" | "featured" }) {
+  const nameSize =
+    variant === "featured"
+      ? "text-[3rem] leading-[0.95] sm:text-[3.35rem] xl:text-[3.75rem]"
+      : "text-[2.35rem] leading-[0.95] sm:text-[2.85rem]";
+  const subSize = variant === "featured" ? "text-[11px] sm:text-xs" : "text-[10px] sm:text-[11px]";
+  const jpSize = variant === "featured" ? "text-sm" : "text-[11px] sm:text-xs";
+
   return (
-    <img
-      src="/nomi-logo.png"
-      alt="nomi minimal bakeshop"
-      className={`logo-screen object-contain drop-shadow-[0_0_28px_rgba(250,235,200,0.6)] ${className ?? ""}`}
-    />
+    <div className="flex min-w-0 flex-col text-left text-nomi-cream">
+      <span className={`${jpSize} font-light tracking-[0.28em] text-nomi-cream/85`}>のみ</span>
+      <span
+        className={`font-display ${nameSize} mt-0.5 tracking-tight text-[#F6EBC9] drop-shadow-[0_0_26px_rgba(250,235,200,0.35)]`}
+      >
+        nomi
+      </span>
+      <span
+        className={`${subSize} mt-1 font-medium uppercase leading-snug tracking-[0.28em] text-nomi-cream/92 drop-shadow-[0_1px_10px_rgba(7,13,24,0.75)] sm:tracking-[0.32em]`}
+      >
+        Minimal Bakeshop
+      </span>
+    </div>
   );
 }
 
@@ -131,25 +146,25 @@ export default function App() {
 
       {/* ── HEADER ────────────────────────────────────────────────── */}
       <header className="relative z-20 flex-none px-4 py-3 sm:px-7 sm:py-4 md:px-10 lg:px-12 lg:py-5">
-        {/* Mobile / tablet: logo + CTA, then scrollable nav */}
-        <div className="mx-auto max-w-[1180px] lg:hidden">
+        {/* Mobile / tablet / small laptop: logo + CTA, then responsive nav */}
+        <div className="mx-auto max-w-[1180px] xl:hidden">
           <div className="flex items-center justify-between gap-3">
-            <a href="#home" className="flex min-w-0 shrink items-center">
-              <LogoMark className="h-[72px] w-auto max-h-[min(16vh,140px)] sm:h-[88px] sm:max-h-[min(18vh,160px)]" />
+            <a href="#home" className="flex min-w-0 shrink items-center outline-none ring-[#f0c06a]/40 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d1420]/80">
+              <LogoWordmark variant="compact" />
             </a>
             <VisitUsButton />
           </div>
           <PrimaryNav
-            className="mt-3 justify-start overflow-x-auto overscroll-x-contain pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            linkGapClass="gap-4 sm:gap-5"
-            textClass="text-[9px] font-medium tracking-[0.14em] sm:text-[10px] sm:tracking-[0.16em] md:text-[11px]"
+            className="mt-3 justify-start overflow-x-auto overscroll-x-contain pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:justify-center md:overflow-visible md:pb-0"
+            linkGapClass="gap-4 sm:gap-5 md:gap-6"
+            textClass="font-sans text-[9px] font-medium tracking-[0.14em] sm:text-[10px] sm:tracking-[0.16em] md:text-[11px] md:tracking-[0.17em]"
           />
         </div>
 
         {/* Desktop: centered nav between logo and CTA */}
-        <div className="mx-auto hidden w-full max-w-[1180px] grid-cols-[1fr_auto_1fr] items-center gap-x-6 gap-y-3 lg:grid lg:gap-x-8">
-          <a href="#home" className="flex shrink-0 justify-self-start self-center">
-            <LogoMark className="h-[128px] w-auto max-h-[min(22vh,200px)] sm:h-[148px] sm:max-h-[min(24vh,220px)] lg:h-[176px] lg:max-h-[min(26vh,260px)] xl:h-[196px]" />
+        <div className="mx-auto hidden w-full max-w-[1180px] grid-cols-[1fr_auto_1fr] items-center gap-x-6 gap-y-3 xl:grid xl:gap-x-8">
+          <a href="#home" className="flex shrink-0 justify-self-start self-center outline-none ring-[#f0c06a]/40 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d1420]/80">
+            <LogoWordmark variant="featured" />
           </a>
           <PrimaryNav className="col-start-2 self-center" />
           <VisitUsButton className="col-start-3 justify-self-end self-center" />
@@ -165,15 +180,15 @@ export default function App() {
             <HeartIcon className="absolute -left-3 top-[72%] hidden h-5 w-5 text-white/25 min-[400px]:block sm:-left-4 sm:top-[70%] sm:h-6 sm:w-6" />
             <Sparkle className="absolute right-[12%] bottom-4 h-2.5 w-2.5 text-amber-100/60 nomi-star sm:right-[15%] sm:bottom-6 sm:h-3 sm:w-3" />
 
-            <h1 className="font-display text-[2rem] font-semibold leading-[1.08] tracking-[-0.015em] text-[#F6EBC9] drop-shadow-[0_2px_24px_rgba(0,0,0,0.5)] min-[400px]:text-[2.25rem] sm:text-[2.6rem] md:text-[3rem] lg:text-[3.4rem]">
-              <span className="block">Good coffee.</span>
-              <span className="mt-1 block">Warm bread.</span>
-              <span className="mt-1 block text-[#e9a99a] drop-shadow-[0_2px_20px_rgba(233,169,154,0.3)]">
+            <h1 className="font-display text-[2rem] font-normal leading-[1.08] tracking-[-0.015em] text-[#F6EBC9] drop-shadow-[0_2px_24px_rgba(0,0,0,0.5)] min-[400px]:text-[2.25rem] sm:text-[2.6rem] md:text-[3rem] lg:text-[3.4rem]">
+              <span className="block font-normal">Good coffee.</span>
+              <span className="mt-1 block font-medium">Warm bread.</span>
+              <span className="mt-1 block font-bold text-[#e9a99a] drop-shadow-[0_2px_20px_rgba(233,169,154,0.3)]">
                 Happy cats.<span className="ml-2 inline-block translate-y-0.5 text-[0.6em]"><PawIcon className="inline h-6 w-6 align-middle sm:h-7 sm:w-7" /></span>
               </span>
             </h1>
 
-            <p className="mt-5 max-w-[360px] rounded-xl bg-[#0b1220]/44 px-3 py-2 text-[14px] font-medium leading-relaxed tracking-[0.005em] text-[#f6ebc9]/95 shadow-[0_6px_20px_rgba(0,0,0,0.28)] backdrop-blur-[1px] sm:mt-6 sm:text-[15px]">
+            <p className="mt-5 max-w-[360px] rounded-xl bg-[#0b1220]/44 px-3 py-2 text-[14px] font-light leading-relaxed tracking-[0.005em] text-[#f6ebc9]/95 shadow-[0_6px_20px_rgba(0,0,0,0.28)] backdrop-blur-[1px] sm:mt-6 sm:text-[15px]">
               A cozy bakery café inspired by minimalism, nature, and nostalgia.
             </p>
 

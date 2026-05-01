@@ -17,8 +17,8 @@ export default {
         },
       },
       fontFamily: {
-        display: ["Fraunces", "Georgia", "serif"],
-        sans: ["Manrope", "system-ui", "sans-serif"],
+        display: ["Zodiak", "Georgia", "serif"],
+        sans: ["Satoshi", "system-ui", "sans-serif"],
       },
       backgroundImage: {
         "night-sky":
