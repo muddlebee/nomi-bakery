@@ -42,39 +42,7 @@ function HeartIcon({ className }: { className?: string }) {
   );
 }
 
-// ─── Nav ─────────────────────────────────────────────────────────────────────
-
-const NAV_LINKS = ["HOME", "ABOUT", "MENU", "GALLERY", "CONTACT"] as const;
-
-function PrimaryNav({
-  className,
-  linkGapClass = "gap-5 sm:gap-6 lg:gap-8",
-  textClass = "text-[11px] font-medium tracking-[0.18em] sm:text-[11.5px] lg:text-xs font-sans",
-}: {
-  className?: string;
-  linkGapClass?: string;
-  textClass?: string;
-}) {
-  return (
-    <nav className={`flex items-center justify-center ${linkGapClass} ${textClass} ${className ?? ""}`} aria-label="Primary">
-      {NAV_LINKS.map((label) => {
-        const active = label === "HOME";
-        return (
-          <a
-            key={label}
-            href={`#${label.toLowerCase()}`}
-            className={`flex shrink-0 flex-col items-center gap-1 uppercase transition ${active ? "text-[#f0c06a]" : "text-white/85 hover:text-white"}`}
-          >
-            <span className="flex h-4 w-full items-end justify-center" aria-hidden>
-              {active ? <PawIcon className="h-3 w-3 nomi-float-slow text-[#f0c06a]" /> : null}
-            </span>
-            <span className={`leading-none ${active ? "border-b border-[#f0c06a] pb-0.5" : ""}`}>{label}</span>
-          </a>
-        );
-      })}
-    </nav>
-  );
-}
+// ─── Header ──────────────────────────────────────────────────────────────────
 
 function VisitUsButton({ className }: { className?: string }) {
   return (
@@ -146,7 +114,7 @@ export default function App() {
 
       {/* ── HEADER ────────────────────────────────────────────────── */}
       <header className="relative z-20 flex-none px-4 py-3 sm:px-7 sm:py-4 md:px-10 lg:px-12 lg:py-5">
-        {/* Mobile / tablet / small laptop: logo + CTA, then responsive nav */}
+        {/* Mobile / tablet / small laptop: wordmark + CTA only */}
         <div className="mx-auto max-w-[1180px] xl:hidden">
           <div className="flex items-center justify-between gap-3">
             <a href="#home" className="flex min-w-0 shrink items-center outline-none ring-[#f0c06a]/40 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d1420]/80">
@@ -154,20 +122,14 @@ export default function App() {
             </a>
             <VisitUsButton />
           </div>
-          <PrimaryNav
-            className="mt-3 justify-start overflow-x-auto overscroll-x-contain pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:justify-center md:overflow-visible md:pb-0"
-            linkGapClass="gap-4 sm:gap-5 md:gap-6"
-            textClass="font-sans text-[9px] font-medium tracking-[0.14em] sm:text-[10px] sm:tracking-[0.16em] md:text-[11px] md:tracking-[0.17em]"
-          />
         </div>
 
-        {/* Desktop: centered nav between logo and CTA */}
-        <div className="mx-auto hidden w-full max-w-[1180px] grid-cols-[1fr_auto_1fr] items-center gap-x-6 gap-y-3 xl:grid xl:gap-x-8">
-          <a href="#home" className="flex shrink-0 justify-self-start self-center outline-none ring-[#f0c06a]/40 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d1420]/80">
+        {/* Desktop xl+: same minimal row */}
+        <div className="mx-auto hidden w-full max-w-[1180px] items-center justify-between gap-8 xl:flex">
+          <a href="#home" className="flex shrink-0 outline-none ring-[#f0c06a]/40 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d1420]/80">
             <LogoWordmark variant="featured" />
           </a>
-          <PrimaryNav className="col-start-2 self-center" />
-          <VisitUsButton className="col-start-3 justify-self-end self-center" />
+          <VisitUsButton />
         </div>
       </header>
 
